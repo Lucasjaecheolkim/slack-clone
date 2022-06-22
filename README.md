@@ -186,6 +186,7 @@ $ nest g s workspaces && nest g co workspaces
 
 ## swagger
 
+* http://localhost:3000/api/#/
 ### src/main.ts
 ```bash
     const config = new DocumentBuilder()
@@ -200,6 +201,7 @@ $ nest g s workspaces && nest g co workspaces
 
 ```bash
 $ npm i @nestjs/swagger swagger-ui-express
+//$ npm install --save @nestjs/swagger swagger-ui-express
 ```
 
 ### src/users/dto/join.request.dto, src/users/users.controller.ts, src/dms/dms.controller.ts
@@ -221,6 +223,15 @@ $ npm i @nestjs/swagger swagger-ui-express
 * 다른 dto에서 일부만 빼올 수 있음(섹션 3에 나옴)
 
 
+## 커스텀 데코레이터 만들기
+### src/common/user.decorator.ts
+```bash
+    소스참조
+```
+* 앞으로 @User() 데코레이터 사용 가능(req.user 대체)
+* 비슷하게 @Token() 같은 것도 만들 수 있음
+* 혹시나 기반 프레임워크가 달라지더라도 req.user를 모두 찾아 바꾸는 게 아니라 데코레이터만 바꿔도 돼서 편리함
+* ctx.switchToHttp()가 있는데 혹시나 서비스가 웹소켓 기반으로 바뀌면 ctx.switchToWs()로 쉽게 바꿀 수 있음
 
 
 
