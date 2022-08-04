@@ -234,5 +234,17 @@ $ npm i @nestjs/swagger swagger-ui-express
 * ctx.switchToHttp()가 있는데 혹시나 서비스가 웹소켓 기반으로 바뀌면 ctx.switchToWs()로 쉽게 바꿀 수 있음
 
 
+## 인터셉터
+### src/common/interceptors/undefinedtoNull.interceptor.ts
+```bash
+    소스참조
+```
+* 요청이나 응답에 대한 공통적인 작업을 인터셉터에서 처리
+* 에러는 expectionFilter에서 처리할 것
+* 적용은 @UseInterceptor(인터셉터)
+
+
+
+# 섹션2 (ch2 폴더)
 
 
