@@ -1,62 +1,67 @@
 import {
   Body,
   Controller,
+  NotFoundException,
   Post,
+  UseGuards,
   Get,
-  Req,
-  Res,
-  UseInterceptors,
+  Response,
+  ForbiddenException,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
+import { NotLoggedInGuard } from '../auth/not-logged-in.guard';
+import { LoggedInGuard } from '../auth/logged-in.guard';
+import { User } from '../common/decorators/user.decorator';
+import { Users } from '../entities/Users';
 import { JoinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
-import { UserDto } from '../common/dto/user.dto';
-import { User } from '../common/decorators/user.decorator';
-import { UndefinedToNullInterceptor } from '../common/interceptors/undefinedToNull.interceptor';
 
-@UseInterceptors(UndefinedToNullInterceptor)
-@ApiTags('USER')
+@ApiTags('USERS')
 @Controller('api/users')
 export class UsersController {
-    constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService) {}
 
-    @ApiResponse({
-        type: UserDto,
-        status: 200,
-        description: '성공',
-    })
-    @ApiOperation({ summary: '내 정보 조회' })
-    @Get()
-    getUsers(@User() user) {
-        return user;
-    }
+  @ApiCookieAuth('connect.sid')
+  @ApiOperation({ summary: '내 정보 가져오기' })
+  @Get()
+  async getProfile(@User() user: Users) {
+    return user || false;
+  }
 
-    @ApiOperation({ summary: '회원가입' })
-    @Post()
-    postUsers(@Body() data: JoinRequestDto) {
-        this.usersService.postUsers(data.email, data.nickname, data.password);
-    }
+  @ApiOperation({ summary: '로그인' })
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@User() user: Users) {
+    return user;
+  }
 
-    @ApiResponse({
-        type: UserDto,
-        status: 200,
-        description: '성공',
-    })
-    @ApiResponse({
-        status: 500,
-        description: '서버 에러',
-    })
-    @ApiOperation({ summary: '로그인' })
-    @Post('login')
-    logIn(@User() user) {
-        return user;
+  @ApiOperation({ summary: '회원가입' })
+  @UseGuards(NotLoggedInGuard)
+  @Post()
+  async join(@Body() data: JoinRequestDto) {
+    const user = this.usersService.findByEmail(data.email);
+    if (!user) {
+      throw new NotFoundException();
     }
+    const result = await this.usersService.join(
+      data.email,
+      data.nickname,
+      data.password,
+    );
+    if (result) {
+      return 'ok';
+    } else {
+      throw new ForbiddenException();
+    }
+  }
 
-    @ApiOperation({ summary: '로그아웃' })
-    @Post('logout')
-    logOut(@Req() req, @Res() res) {
-        req.logOut();
-        res.clearCookie('connect.sid', { httpOnly: true });
-        res.send('ok');
-    }
+  @ApiCookieAuth('connect.sid')
+  @ApiOperation({ summary: '로그아웃' })
+  @UseGuards(LoggedInGuard)
+  @Post('logout')
+  async logout(@Response() res) {
+    res.clearCookie('connect.sid', { httpOnly: true });
+    return res.send('ok');
+  }
 }
