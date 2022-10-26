@@ -41,8 +41,8 @@ async function bootstrap() {
     },
   );
   const config = new DocumentBuilder()
-    .setTitle('Sleact API')
-    .setDescription('Sleact 개발을 위한 API 문서입니다.')
+    .setTitle('Slack API')
+    .setDescription('Slack 개발을 위한 API 문서입니다.')
     .setVersion('1.0')
     .addCookieAuth('connect.sid')
     .build();
@@ -63,7 +63,7 @@ async function bootstrap() {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  const PORT = process.env.PORT || 3095;
+  const PORT = process.env.PORT || 7095;
   await app.listen(PORT);
   console.log(`server listening on port ${PORT}`);
 

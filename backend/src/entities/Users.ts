@@ -19,7 +19,7 @@ import { WorkspaceMembers } from './WorkspaceMembers';
 import { Workspaces } from './Workspaces';
 
 @Index('email', ['email'], { unique: true })
-@Entity({ schema: 'sleact', name: 'users' })
+@Entity({ schema: 'test', name: 'users' })
 export class Users {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;

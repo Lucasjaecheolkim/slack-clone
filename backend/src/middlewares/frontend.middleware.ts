@@ -5,12 +5,11 @@ import path from 'path';
 export class FrontendMiddleware implements NestMiddleware {
   use(req, res, next) {
     const { baseUrl } = req;
+    console.log(baseUrl);
     if (baseUrl.includes('/api')) {
       next();
     } else {
-      res.sendFile(
-        path.join(__dirname, '..', '..', '..', 'public', 'index.html'),
-      );
+      res.sendFile(path.join(__dirname, '..', '', 'public', 'index.html'));
     }
   }
 }
