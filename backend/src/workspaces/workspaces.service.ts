@@ -43,7 +43,7 @@ export class WorkspacesService {
     workspaceMember.WorkspaceId = returned.id;
     await this.workspaceMembersRepository.save(workspaceMember);
     const channel = new Channels();
-    channel.name = '일반';
+    channel.name = 'slack';
     channel.WorkspaceId = returned.id;
     const channelReturned = await this.channelsRepository.save(channel);
     const channelMember = new ChannelMembers();
@@ -82,7 +82,7 @@ export class WorkspacesService {
     await this.workspaceMembersRepository.save(workspaceMember);
     const channelMember = new ChannelMembers();
     channelMember.ChannelId = workspace.Channels.find(
-      (v) => v.name === '일반',
+      (v) => v.name === 'slack',
     ).id;
     channelMember.UserId = user.id;
     await this.channelMembersRepository.save(channelMember);

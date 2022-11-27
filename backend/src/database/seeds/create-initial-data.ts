@@ -15,7 +15,7 @@ export class CreateInitialData implements Seeder {
       .createQueryBuilder()
       .insert()
       .into(Channels)
-      .values([{ id: 1, name: '일반', WorkspaceId: 1, private: false }])
+      .values([{ id: 1, name: 'slack', WorkspaceId: 1, private: false }])
       .execute();
   }
 }

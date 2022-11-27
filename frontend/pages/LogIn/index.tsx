@@ -3,7 +3,7 @@ import { Button, Error, Form, Header, Input, Label, LinkContainer } from '@pages
 import fetcher from '@utils/fetcher';
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
-//import { Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import useSWR from 'swr';
 
 const LogIn = () => {
@@ -34,10 +34,10 @@ const LogIn = () => {
   );
 
   console.log(error, userData);
-  // if (!error && userData) {
-  //   console.log('로그인됨', userData);
-  //   return <Redirect to="/workspace/slack/channel/일반" />;
-  // }
+  if (!error && userData) {
+    console.log('로그인됨', userData);
+    return <Redirect to="/workspace/slack/channel/slack" />;
+  }
 
   return (
     <div id="container">

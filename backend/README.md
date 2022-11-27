@@ -45,8 +45,8 @@ $ npm install
 $ node -v
 $ npm -v
 $ npm i -g @nestjs/cli
-$ nest new back
-$ cd back
+$ nest new backend
+$ cd backend
 $ npm run start
 ```
 
@@ -180,7 +180,7 @@ export class AppModule {
 
 # API 설계하기
 
-### back 폴더 안에서 명령어 입력(모듈 만드는 명령)
+### backend 폴더 안에서 명령어 입력(모듈 만드는 명령)
 * src/app.module.ts와 연결되었는지 확인할 것
 ```bash
 $ nest g mo users
@@ -220,7 +220,7 @@ $ nest g s workspaces && nest g co workspaces
 
 ## swagger
 
-* http://localhost:3090/api/#/
+* http://localhost:7095/api/#/
 ### src/main.ts
 ```bash
     const config = new DocumentBuilder()
@@ -354,7 +354,7 @@ ormConfig.ts를 따로 만들어서(package.json과 같은 위치에) import해�
 
 ## SCHEMA, 테이블 생성
 
-mysql 프롬프트로 접속 후 sleact SCHEMA 생성
+mysql 프롬프트로 접속 후 slack SCHEMA 생성
 ```shell
 mysql -uroot -p디비비밀번호
 ```
@@ -365,7 +365,7 @@ mysql -uroot -p디비비밀번호
 ```
 mysql prompt에서 다음 쿼리 수행
 ```
-CREATE SCHEMA `sleact` DEFAULT CHARACTER SET utf8mb4;
+CREATE SCHEMA `slack` DEFAULT CHARACTER SET utf8mb4;
 exit;
 ```
 * SCHEMA 생성 후 **synchronize: true**인 상태에서 서버 실행하면 테이블이 전부 생성됨
@@ -716,7 +716,7 @@ nest g ga events
 
 ## Socket.io
 * namespace와 room으로 구성됨
-  - namespace는 워크스페이스(ws-워크스페이스명, 예시:ws-sleact)
+  - namespace는 워크스페이스(ws-워크스페이스명, 예시:ws-slack)
   - room은 채널, DM
 * @WebSocketGateway({ namespace: '이름' 또는 정규표현식 })
 * @WebSocketServer(): 서비스에서 의존성주입받아 사용할 소켓 서버 객체

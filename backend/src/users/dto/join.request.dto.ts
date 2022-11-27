@@ -20,7 +20,7 @@ export class JoinRequestDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: 'nodejsbook',
+    example: 'test1234',
     description: '비밀번호',
   })
   public password: string;

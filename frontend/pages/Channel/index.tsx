@@ -177,7 +177,7 @@ const Channel = () => {
   }, []);
 
   if (channelsData && !channelData) {
-    return <Redirect to={`/workspace/${workspace}/channel/일반`} />;
+    return <Redirect to={`/workspace/${workspace}/channel/slack`} />;
   }
 
   const chatSections = makeSection(chatData ? ([] as IChat[]).concat(...chatData).reverse() : []);
